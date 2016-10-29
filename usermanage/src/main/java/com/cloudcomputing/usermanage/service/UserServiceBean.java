@@ -15,6 +15,7 @@ public class UserServiceBean implements UserService {
 	private static Map<String, User> userMap;
 	
 	static{
+		System.out.println("static ~~~~~~~~~~~~~~~~~~~~~~");
 		if(userMap == null){
 			userMap = new HashMap<>();
 		}
@@ -33,12 +34,12 @@ public class UserServiceBean implements UserService {
 	}
 	
 	private static User save(User user){
-		
 		if(userMap.containsKey(user.getUsername()))
 			userMap.put(user.getUsername(), user);
 		userMap.put(user.getUsername(), user); 
 		return user;
 	}
+	
 	private static boolean remove(String username){
 		User removedUser = userMap.remove(username);
 		return removedUser != null;
@@ -70,7 +71,7 @@ public class UserServiceBean implements UserService {
 
 	@Override
 	public void deleteUser(String username) {
-		userMap.remove(username);
+		remove(username);
 	}
 
 }

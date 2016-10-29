@@ -1,6 +1,9 @@
 package com.cloudcomputing.usermanage.model;
 
+
+
 public class User {
+	
 	private String username;
 	private String password;
 	private String location;
