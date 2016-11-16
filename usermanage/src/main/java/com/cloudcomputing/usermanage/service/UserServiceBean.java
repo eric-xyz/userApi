@@ -1,77 +1,107 @@
 package com.cloudcomputing.usermanage.service;
 
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.springframework.stereotype.Service;
 
+import com.cloudcomputing.database.GaeConnection;
 import com.cloudcomputing.usermanage.model.User;
 
 @Service
 public class UserServiceBean implements UserService {
 	
 	private static String username;
-	private static Map<String, User> userMap;
+	private static GaeConnection gc=new GaeConnection();
+	
 	
 	static{
 		System.out.println("static ~~~~~~~~~~~~~~~~~~~~~~");
-		if(userMap == null){
-			userMap = new HashMap<>();
-		}
 		User user1 = new User();
-		user1.setUsername("kagebunsineric@gmail.com");
+		user1.setUsername("himanshiaggarwal16893@gmail.com");
 		user1.setPassword("default");
 		user1.setLocation("plano");
-		
 		User user2 = new User();
-		user2.setUsername("xyz0508@gmail.com");
+		user2.setUsername("xyz0608@gmail.com");
 		user2.setPassword("default");
 		user2.setLocation("dallas");
-		
-		userMap.put(user1.getUsername(), user1); 
-		userMap.put(user2.getUsername(), user2); 
+		try {
+			gc.saveUser(user1);
+			gc.saveUser(user2);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} 
 	}
 	
-	private static User save(User user){
-		if(userMap.containsKey(user.getUsername()))
-			userMap.put(user.getUsername(), user);
-		userMap.put(user.getUsername(), user); 
+	private static User save(User user) throws ClassNotFoundException, SQLException{
+		if(gc.findoneUser(user.getUsername())!=null){
+			gc.updateUser(user);
+		}
+		gc.saveUser(user);
 		return user;
 	}
 	
-	private static boolean remove(String username){
-		User removedUser = userMap.remove(username);
+	private static boolean remove(String username) throws ClassNotFoundException, SQLException{
+		String removedUser = gc.removeUser(username);
 		return removedUser != null;
 	}
 
 	@Override
 	public Collection<User> findAll() {
-		Collection<User> users = userMap.values();
-		return users;
+		Collection<User> users;
+		try {
+			users = gc.findallUser();
+			return users;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} 
 	}
 
 	@Override
 	public User findOne(String username) {
-		User user = userMap.get(username);
-		return user;
+		try {
+			User user1=gc.findoneUser(username);
+			return user1;
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public User createUser(User user) {
-		User savedUser = save(user);
+		User savedUser;
+		try {
+			savedUser = save(user);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			savedUser=null;
+		}
 		return savedUser;
 	}
 
 	@Override
 	public User updateUser(User user) {
-		userMap.put(user.getUsername(), user);
-		return user;
+		try {
+			gc.updateUser(user);
+			return user;
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public void deleteUser(String username) {
-		remove(username);
+		try {
+			remove(username);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

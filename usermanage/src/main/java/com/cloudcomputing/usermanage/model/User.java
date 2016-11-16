@@ -1,7 +1,5 @@
 package com.cloudcomputing.usermanage.model;
 
-
-
 public class User {
 	
 	private String username;
