@@ -33,11 +33,11 @@ public class GaeConnection {
 		else{
 			System.out.println("Successfull Connection");
 			Statement st=conn.createStatement();
-			st.executeUpdate("Insert Into users (username,password, location, role) values('"+user.getUsername()+"','"+user.getPassword()+"','"+user.getLocation()+"');");
+			st.executeUpdate("Insert Into users (username, password, location, role) values('"+user.getUsername()+"','"+user.getPassword()+"','"+user.getLocation()+"','"+user.getRole()+"');");
 			System.out.println("success");
 		}
 	}
-	public void updateUser(User user) throws SQLException, ClassNotFoundException{
+	public User updateUser(User user) throws SQLException, ClassNotFoundException{
 		Connection conn=getConnection();
 		if(conn==null){
 			System.out.println("Connection Not made");
@@ -46,13 +46,14 @@ public class GaeConnection {
 			System.out.println("Successful Connection");
 			String s="Update users SET password=?, location=?, role=? where username=?;";
 			PreparedStatement ps=conn.prepareStatement(s);
-			ps.setString(1,user.getPassword());
+			ps.setString(1, user.getPassword());
 			ps.setString(2, user.getLocation());
-			ps.setString(3, user.getUsername());
-			ps.setString(4, user.getRole());
+			ps.setString(3, user.getRole());
+			ps.setString(4, user.getUsername());
 			ps.executeUpdate();
 			ps.close();
 		}
+		return user;
 	}
 	public String removeUser(String username) throws SQLException, ClassNotFoundException{
 		Connection conn=getConnection();
