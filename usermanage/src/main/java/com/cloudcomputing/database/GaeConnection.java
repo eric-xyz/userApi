@@ -18,7 +18,7 @@ public class GaeConnection {
 	
 	public Connection getConnection() throws ClassNotFoundException, SQLException{
 		String driverClassName = "com.mysql.jdbc.Driver";
-		String connectionUrl = "jdbc:mysql://173.194.85.197/user";
+		String connectionUrl = "jdbc:mysql://173.194.85.197/robocode";
 		String dbUser = "himanshi";
 		String dbPwd = "aggarwal";
 		Class.forName(driverClassName);
@@ -90,6 +90,7 @@ public class GaeConnection {
 					user.setUsername(rs.getString("username"));
 					user.setPassword(rs.getString("password"));
 					user.setLocation(rs.getString("location"));
+					user.setRole(rs.getString("role"));
 					System.out.println(rs.getString("username"));
 					users.add(user);
 				}
@@ -118,6 +119,7 @@ public class GaeConnection {
 					user.setUsername(rs.getString("username"));
 					user.setPassword(rs.getString("password"));
 					user.setLocation(rs.getString("location"));
+					user.setRole(rs.getString("role"));
 				}
 				return user;
 			}
