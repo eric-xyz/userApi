@@ -64,9 +64,10 @@ public class UserController {
 	public ResponseEntity<User> updateUser(@RequestBody User user){
 		User oldUser = userService.updateUser(user);
 		if(oldUser == null){
-			return new ResponseEntity<User>(user, HttpStatus.OK);
+			return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
+		
 	}
     	
 	@RequestMapping(
