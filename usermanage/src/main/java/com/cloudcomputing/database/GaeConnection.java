@@ -63,9 +63,9 @@ public class GaeConnection {
 		}
 		else{
 			System.out.println("Successfull Connection");
-			String s="Delete from users where username="+username+";";
+			String s="Delete from users where username='"+username+"';";
 			PreparedStatement ps=conn.prepareStatement(s);
-			ps.executeUpdate();
+			ps.execute();
 			ps.close();
 			return username;
 		}
