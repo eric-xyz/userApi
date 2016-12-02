@@ -33,7 +33,7 @@ public class GaeConnection {
 		else{
 			System.out.println("Successfull Connection");
 			Statement st=conn.createStatement();
-			st.executeUpdate("Insert Into users (username,password, location) values('"+user.getUsername()+"','"+user.getPassword()+"','"+user.getLocation()+"');");
+			st.executeUpdate("Insert Into users (username,password, location, role) values('"+user.getUsername()+"','"+user.getPassword()+"','"+user.getLocation()+"');");
 			System.out.println("success");
 		}
 	}
@@ -44,11 +44,12 @@ public class GaeConnection {
 		}
 		else{
 			System.out.println("Successful Connection");
-			String s="Update users SET password=?, location=? where username=?;";
+			String s="Update users SET password=?, location=?, role=? where username=?;";
 			PreparedStatement ps=conn.prepareStatement(s);
 			ps.setString(1,user.getPassword());
 			ps.setString(2, user.getLocation());
 			ps.setString(3, user.getUsername());
+			ps.setString(4, user.getRole());
 			ps.executeUpdate();
 			ps.close();
 		}
