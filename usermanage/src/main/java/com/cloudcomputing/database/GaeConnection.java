@@ -18,7 +18,7 @@ public class GaeConnection {
 	
 	public Connection getConnection() throws ClassNotFoundException, SQLException{
 		String driverClassName = "com.mysql.jdbc.Driver";
-		String connectionUrl = "jdbc:mysql://173.194.85.197/robocode";
+		String connectionUrl = "jdbc:mysql://104.154.142.10/robocode";
 		String dbUser = "himanshi";
 		String dbPwd = "aggarwal";
 		Class.forName(driverClassName);
